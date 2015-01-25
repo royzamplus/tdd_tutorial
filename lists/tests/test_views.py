@@ -57,7 +57,7 @@ class LiveViewTest(TestCase):
 
         self.client.post(
             '/lists/%d/' % (correct_list.id,),
-            data={'item_text': 'A new item for an existing list'}
+            data={'text': 'A new item for an existing list'}
         )
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
@@ -70,7 +70,7 @@ class LiveViewTest(TestCase):
 
         response = self.client.post(
             '/lists/%d/' % (correct_list.id,),
-            data={'item_text': 'A new item for an existing list'}
+            data={'text': 'A new item for an existing list'}
         )
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id,))
 
@@ -78,7 +78,7 @@ class LiveViewTest(TestCase):
         list_ = List.objects.create()
         response = self.client.post(
             '/lists/%d/' % (list_.id,),
-            data={'item_text': ''}
+            data={'text': ''}
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'list.html')
